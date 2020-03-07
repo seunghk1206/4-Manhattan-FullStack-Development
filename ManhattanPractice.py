@@ -1,6 +1,4 @@
 import pygame
-import random
-from random import sample
 
 pygame.init()
 
@@ -26,11 +24,11 @@ class player(object):
         self.velocity = 5
         self.left = False
         self.right = False
-        self.walkCount = 0 #
+        self.walkCount = 0
         self.isJump = False
         self.jumpCount = 10
         self.standing = True
-        self.hitbox = (self.x + 17 , self.y + 11, 28, 60) #####
+        self.hitbox = (self.x + 17 , self.y + 11, 28, 60)
 
     def draw(self, screen):
         if self.walkCount + 1 >= 27:
