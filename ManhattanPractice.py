@@ -4,14 +4,20 @@ pygame.init()
 walkRight = [pygame.image.load('MainChara_R/R1.png'), pygame.image.load('MainChara_R/R2.png'), pygame.image.load('MainChara_R/R3.png')]#, pygame.image.load('Game/R4.png'), pygame.image.load('Game/R5.png'), pygame.image.load('Game/R6.png'), pygame.image.load('Game/R7.png'), pygame.image.load('Game/R8.png'), pygame.image.load('Game/R9.png')]
 walkLeft = [pygame.image.load('MainChara_R/L1.png'), pygame.image.load('MainChara_R/L2.png'), pygame.image.load('MainChara_R/L3.png')]#, pygame.image.load('Game/L4.png'), pygame.image.load('Game/L5.png'), pygame.image.load('Game/L6.png'), pygame.image.load('Game/L7.png'), pygame.image.load('Game/L8.png'), pygame.image.load('Game/L9.png')]
 bg = pygame.image.load('Game/bg.jpg')
+#dungeon = pygame.image.load('')
 char = pygame.image.load('MainChara_R/standing.png')
 score = 0 # Tuple -> list
 #walkRight[4] = 5번째 사진??? 0번째가 첫번째다!!!
 
-screen = pygame.display.set_mode((1500, 1000))
+screen = pygame.display.set_mode((600, 480))
 pygame.display.set_caption("MANhattan game project")
 surface = pygame.image.load('Game/R1.png')
 pygame.display.set_icon(surface)
+
+bulletSound = pygame.mixer.Sound('SoundEff/bullet.wav')
+hitSound = pygame.mixer.Sound('SoundEff/hit.wav')
+music = pygame.mixer.music.load('SoundEff/gameBGM.mp3')
+pygame.mixer.music.play(-1)
 
 #python = object oriented (객체 지향)
 class player(object):
@@ -45,8 +51,33 @@ class player(object):
                 screen.blit(walkRight[0], (self.x, self.y))
             else:#if left
                 screen.blit(walkLeft[0], (self.x, self.y))
-        self.hitbox = (self.x + 17, self.y + 11, 29, 52)
+        self.hitbox = (self.x + 17, self.y + 11, 29, 52) #x, y, width, height
+        #x-axis = man.hitbox[0]
+        #y-axis = man.hitbox[1]
+        #width = man.hitbox[2]
+        #height = man.hitbox[3]
         #pygame.draw.rect(screen, (255,255,255), self.hitbox, 2)
+
+    def hit(self):##if hit function operates, must initialize the position
+        self.jumpCount = 10
+        self.isJump = False
+        self.x = 50
+        self.y = 400
+        self.walkCount = 0#####################################
+        #죽었다고 나오는 메세지 출력
+        msg = pygame.font.SysFont('comicsans', 100)
+        text = msg.render('Dead',1, (255,0,0))############################
+        screen.blit(text, (300 - (text.get_width()/2), 200)) #메세지 출력
+        pygame.display.update()
+        i = 0
+        while i < 100:
+            pygame.time.delay(10)
+            i = i + 1
+            for eachEvent in pygame.event.get(): 
+                if eachEvent.type == pygame.QUIT:
+                    pygame.quit()
+        ############################
+
 
 class projectile():
     def __init__(self, x, y, radius, color, facing):
@@ -112,10 +143,13 @@ class enemy():
                     self.x += self.vel
                     self.walkCount = 0
     def hit(self):
-        if self.health > 0:
-            self.health = self.health - 1
-        else:
-            self.visible = False
+        if self.visible:
+            hitSound.play()
+            if self.health > 0:
+                
+                self.health = self.health - 1
+            else:
+                self.visible = False
         
 def drawGameWindow(): #캐릭터가 움직일때마다 모션 표현
     screen.blit(bg,(0,0)) # 내뒤에 있는 사진 지우기용
@@ -137,7 +171,11 @@ font = pygame.font.SysFont('cosmicsans', 30, True)
 
 while run:
     clock.tick(27) # 27 frames
-
+    if goblin.visible:
+        if man.hitbox[1] < goblin.hitbox[1] + goblin.hitbox[3] and man.hitbox[1] + man.hitbox[3] > goblin.hitbox[1]:
+            if man.hitbox[0] + man.hitbox[2]  >goblin.hitbox[0] and man.hitbox[0] < goblin.hitbox[0] + goblin.hitbox[2]:
+                man.hit()
+                score = 0
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
@@ -162,6 +200,7 @@ while run:
     pressed = pygame.key.get_pressed()
     ##작은 칸을 넘어가야함. 50 < x < 66 
     if pressed[pygame.K_SPACE]:
+        bulletSound.play()
         if man.left:
             facing = -1
         else:
@@ -175,7 +214,7 @@ while run:
         man.right = False # left일때 오른쪽 키를 누르면 절대 안되기 때문
         man.standing = False
         
-    elif pressed[pygame.K_RIGHT] and man.x < 500 - man.width - 5: 
+    elif pressed[pygame.K_RIGHT] and man.x < 600 - man.width - 5: 
         man.x += man.velocity
         man.right = True
         man.left= False
@@ -196,6 +235,7 @@ while run:
             man.left = False
             man.standing = False
             man.walkCount = 0
+
     else:
         if man.jumpCount >= -10:  
             man.y -= (man.jumpCount * abs(man.jumpCount)) * 0.5
@@ -215,5 +255,5 @@ while run:
     #     left = True
 
     drawGameWindow()
-    
+
 pygame.quit()
