@@ -191,8 +191,8 @@ man = player(50, 400, 64, 64)#main character
 goblin = enemy(100, 410, 64, 64, 550, 5, 10, 10) #goblin = class를 가진 instance. 
 boss = enemy(80, 410, 64, 64, 550, 7, 20, 20)
 
-m_door = portal(500, 400, 64, 27)
 n_door = portal(500, 400, 64, 27)
+m_door = portal(500, 400, 64, 27)
 
 bullets = [] #각각의 총알의 명령문을 저장 => 총알이 몇알이 나가는지를 세어주는 역할
 font = pygame.font.SysFont('cosmicsans', 30, True)
@@ -210,12 +210,12 @@ def drawGameWindow(): #캐릭터가 움직일때마다 모션 표현
     pygame.display.update()
 
 def drawGameWindow2(): #캐릭터가 움직일때마다 모션 표현
-    screen.blit(bg,(0,0)) # 내뒤에 있는 사진 지우기용
+    screen.blit(bg2,(0,0)) # 내뒤에 있는 사진 지우기용
     text = font.render('Score: ' + str(score), 2, (0,0,0)) # font 설정!
     screen.blit(text, (450, 10))
     n_door.draw(screen)
     man.draw(screen)
-    boss.draw(screen)
+    boss.draw2(screen)
     for bullet in bullets:
         bullet.draw(screen)
     pygame.display.update()
@@ -256,6 +256,7 @@ def jumpDown():
         man.isJump = False
 
 def StageTwo():
+    second = 1
     man.x = 50
     man.y = 400
     
