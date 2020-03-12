@@ -5,6 +5,7 @@ walkRight = [pygame.image.load('MainChara_R/R1.png'), pygame.image.load('MainCha
 walkLeft = [pygame.image.load('MainChara_R/L1.png'), pygame.image.load('MainChara_R/L2.png'), pygame.image.load('MainChara_R/L3.png')]#, pygame.image.load('Game/L4.png'), pygame.image.load('Game/L5.png'), pygame.image.load('Game/L6.png'), pygame.image.load('Game/L7.png'), pygame.image.load('Game/L8.png'), pygame.image.load('Game/L9.png')]
 bg = pygame.image.load('Game/bg.jpg')
 bg2 = pygame.image.load('bg_map/bg2.png')
+bg3 = pygame.image.load('bg_map/bg3.png')
 #dungeon = pygame.image.load('')
 char = pygame.image.load('MainChara_R/standing.png')
 score = 0 # Tuple -> list
@@ -93,7 +94,7 @@ class projectile():
         #tuple = list랑 비슷하지만 숫자를 변경 할 수 있는 놈
 
 class portal():
-    dungeonPortal = [pygame.image.load('door/door_m.png'), pygame.image.load('door/door_n.png')]
+    dungeonPortal = [pygame.image.load('door/door_n.png'), pygame.image.load('door/door_m.png')]
     def __init__(self, x, y, width, height):
         self.x = x
         self.y = y
@@ -104,6 +105,22 @@ class portal():
             screen.blit(self.dungeonPortal[0], (self.x, self.y))
         elif second == 1: # 2nd stage
             screen.blit(self.dungeonPortal[1], (self.x, self.y))
+class npc():
+    standing = pygame.image.load('Game/Standing.png')
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+    def draw(self, screen):
+        #self.walkCount = 0 #이유-> 사진이 9 개인데 카운트를 하나씩 늘려서 0번째부터 9번쨰까지 다 process 시키려고
+        screen.blit(self.standing, (self.x, self.y))
+    def dialogue(self, writings):
+        self.writings = writings
+        dia = dia_font.render(self.writings, 25, (255,0,0))
+
+        screen.blit(dia, (200, 410))
+
 
 class enemy():
     walkRight = [pygame.image.load('Game/R1E.png'), pygame.image.load('Game/R2E.png'), pygame.image.load('Game/R3E.png'), pygame.image.load('Game/R4E.png'), pygame.image.load('Game/R5E.png'), pygame.image.load('Game/R6E.png'), pygame.image.load('Game/R7E.png'), pygame.image.load('Game/R8E.png'), pygame.image.load('Game/R9E.png'), pygame.image.load('Game/R10E.png'), pygame.image.load('Game/R11E.png')]
@@ -157,7 +174,6 @@ class enemy():
             self.hitbox = (self.x + 13, self.y + 2, 31, 57) #draw hitbox 
             pygame.draw.rect(screen, (255,0,0), (self.hitbox[0], self.hitbox[1] - 20, 50, 10)) #Red is background color
             pygame.draw.rect(screen, (0,128,0), (self.hitbox[0], self.hitbox[1] - 20, 50 - ((50/self.maxHP)*(self.maxHP - self.health)), 10))
-    
 
     def move(self):
         if self.visible:
@@ -183,6 +199,7 @@ class enemy():
             else:
                 self.visible = False
         
+
 clock = pygame.time.Clock()
 beginning = 1 # 1 = true
 second = 0 #0 = false, do not start stage two yet
@@ -190,12 +207,14 @@ second = 0 #0 = false, do not start stage two yet
 man = player(50, 400, 64, 64)#main character
 goblin = enemy(100, 410, 64, 64, 550, 5, 10, 10) #goblin = class를 가진 instance. 
 boss = enemy(80, 410, 64, 64, 550, 7, 20, 20)
+human = npc(200, 410, 64, 64)#self, x, y, width, height
 
 n_door = portal(500, 400, 64, 27)
 m_door = portal(500, 400, 64, 27)
 
 bullets = [] #각각의 총알의 명령문을 저장 => 총알이 몇알이 나가는지를 세어주는 역할
 font = pygame.font.SysFont('cosmicsans', 30, True)
+dia_font = pygame.font.SysFont('cosmicsans', 20, True)
 #instance
 
 def drawGameWindow(): #캐릭터가 움직일때마다 모션 표현
@@ -211,11 +230,23 @@ def drawGameWindow(): #캐릭터가 움직일때마다 모션 표현
 
 def drawGameWindow2(): #캐릭터가 움직일때마다 모션 표현
     screen.blit(bg2,(0,0)) # 내뒤에 있는 사진 지우기용
-    text = font.render('Score: ' + str(score), 2, (0,0,0)) # font 설정!
+    text = font2.render('Score: ' + str(score), 2, (255,255,255)) # font 설정!
     screen.blit(text, (450, 10))
     n_door.draw(screen)
     man.draw(screen)
     boss.draw2(screen)
+    for bullet in bullets:
+        bullet.draw(screen)
+    pygame.display.update()
+
+def drawGameWindow3(): #캐릭터가 움직일때마다 모션 표현
+    screen.blit(bg3,(0,0)) # 내뒤에 있는 사진 지우기용
+    text = font.render('Score: ' + str(score), 2, (0,0,0)) # font 설정!
+    screen.blit(text, (450, 10))
+    m_door.draw(screen)
+    man.draw(screen)
+    human.draw(screen)
+    human.dialogue('You killed me! But you destroyed the city also!')
     for bullet in bullets:
         bullet.draw(screen)
     pygame.display.update()
@@ -259,7 +290,29 @@ def StageTwo():
     second = 1
     man.x = 50
     man.y = 400
-    
+
+def Control():
+    if pressed[pygame.K_SPACE]:
+        bulletSound.play()
+        spaceBar()
+    if pressed[pygame.K_LEFT] and man.x > man.velocity: 
+        leftKey()
+        
+    elif pressed[pygame.K_RIGHT] and man.x < 600 - man.width - 5: 
+        rightKey()
+
+    else: # If jus standing
+        man.standing = True
+        man.walkCount = 0
+
+########## 캐릭터의 점프 ###########
+    if not (man.isJump): 
+        if pressed[pygame.K_UP]:
+            jumpUp()
+
+    else:
+        jumpDown()
+
 while beginning == 1:
     clock.tick(27) # 27 frames
     if goblin.visible:
@@ -297,26 +350,7 @@ while beginning == 1:
                 second = 1
                 StageTwo()
                 break
-    if pressed[pygame.K_SPACE]:
-        bulletSound.play()
-        spaceBar()
-    if pressed[pygame.K_LEFT] and man.x > man.velocity: 
-        leftKey()
-        
-    elif pressed[pygame.K_RIGHT] and man.x < 600 - man.width - 5: 
-        rightKey()
-
-    else: # If jus standing
-        man.standing = True
-        man.walkCount = 0
-
-########## 캐릭터의 점프 ###########
-    if not (man.isJump): 
-        if pressed[pygame.K_UP]:
-            jumpUp()
-
-    else:
-        jumpDown()
+    Control()
     drawGameWindow()
 #while문 나옴.
 
@@ -351,34 +385,39 @@ while second == 1:
     pressed = pygame.key.get_pressed()
     ##작은 칸을 넘어가야함. 50 < x < 66 
     if pressed[pygame.K_DOWN]:
-        if not goblin.visible:
+        if not boss.visible:
+            if 460 < man.x < 500:
+                second = 0
+                Third = 1
+                StageTwo()
+                break
+    Control()
+    drawGameWindow2()
+
+while Third == 1:
+    clock.tick(27) # 27 frames
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+    for bullet in bullets:
+        if bullet.x < 600 and bullet.x > 0: #벽을 뚫지 않게
+                bullet.x += bullet.vel
+        else:
+            bullets.pop(bullets.index(bullet)) #[0 . 3 4 8 9] #501 픽셀로 가버리면 불릿을 없애버리는 코드
+            #현재의 불릿 인덱스*(위치)를 찾아서 지움
+
+
+    pressed = pygame.key.get_pressed()
+    ##작은 칸을 넘어가야함. 50 < x < 66 
+    if pressed[pygame.K_DOWN]:
+        if not boss.visible:
             if 460 < man.x < 500:
                 beginning = 0
                 second = 1
                 StageTwo()
                 break
-    if pressed[pygame.K_SPACE]:
-        bulletSound.play()
-        spaceBar()
-    if pressed[pygame.K_LEFT] and man.x > man.velocity: 
-        leftKey()
-        
-    elif pressed[pygame.K_RIGHT] and man.x < 600 - man.width - 5: 
-        rightKey()
-
-    else: # If jus standing
-        man.standing = True
-        man.walkCount = 0
-
-########## 캐릭터의 점프 ###########
-    if not (man.isJump): 
-        if pressed[pygame.K_UP]:
-            jumpUp()
-
-    else:
-        jumpDown()
-
-    drawGameWindow2()
-
-
+        if 168< man.x <232:
+            human.dialogue('You killed me! But you destroyed the city also!')
+    Control()
+    drawGameWindow3()
 pygame.quit()
