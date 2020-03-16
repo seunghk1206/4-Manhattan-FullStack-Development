@@ -313,8 +313,7 @@ def Control():
     else:
         jumpDown()
 
-while beginning == 1:
-    clock.tick(27) # 27 frames
+def visible():
     if goblin.visible:
         if man.hitbox[1] < goblin.hitbox[1] + goblin.hitbox[3] and man.hitbox[1] + man.hitbox[3] > goblin.hitbox[1]:
             if man.hitbox[0] + man.hitbox[2]  >goblin.hitbox[0] and man.hitbox[0] < goblin.hitbox[0] + goblin.hitbox[2]:
@@ -340,6 +339,10 @@ while beginning == 1:
                 bullet.x += bullet.vel
             else:
                 bullets.pop(bullets.index(bullet))
+
+while beginning == 1:
+    clock.tick(27) # 27 frames
+    visible()   
 
     pressed = pygame.key.get_pressed()
     ##작은 칸을 넘어가야함. 50 < x < 66 
