@@ -198,6 +198,16 @@ class enemy():
                 self.health = self.health - 1
             else:
                 self.visible = False
+    
+    def manHit(self):
+        if self.visible:
+            if man.hitbox[1] < self.hitbox[1] + self.hitbox[3] and man.hitbox[1] + man.hitbox[3] > self.hitbox[1]:
+                if man.hitbox[0] + man.hitbox[2]  >self.hitbox[0] and man.hitbox[0] < self.hitbox[0] + self.hitbox[2]:
+                    man.hit()
+                    score = 0
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False   
         
 
 clock = pygame.time.Clock()
@@ -313,20 +323,9 @@ def Control():
     else:
         jumpDown()
 
-def manHit():
-    if goblin.visible:
-        if man.hitbox[1] < goblin.hitbox[1] + goblin.hitbox[3] and man.hitbox[1] + man.hitbox[3] > goblin.hitbox[1]:
-            if man.hitbox[0] + man.hitbox[2]  >goblin.hitbox[0] and man.hitbox[0] < goblin.hitbox[0] + goblin.hitbox[2]:
-                man.hit()
-                score = 0
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run = False   
-
-
 while beginning == 1:
     clock.tick(27) # 27 frames
-    manHit()
+    goblin.manHit()
     for bullet in bullets:
         if goblin.visible:
             if bullet.y - bullet.radius < goblin.hitbox[1] + goblin.hitbox[3] and bullet.y + bullet.radius > goblin.hitbox[1]:
@@ -360,14 +359,7 @@ while beginning == 1:
 
 while second == 1:
     clock.tick(27) # 27 frames
-    if boss.visible:
-        if man.hitbox[1] < boss.hitbox[1] + boss.hitbox[3] and man.hitbox[1] + man.hitbox[3] > boss.hitbox[1]:
-            if man.hitbox[0] + man.hitbox[2]  >boss.hitbox[0] and man.hitbox[0] < boss.hitbox[0] + boss.hitbox[2]:
-                man.hit()
-                score = 0
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run = False
+    boss.manHit()
     for bullet in bullets:
         if boss.visible:
             if bullet.y - bullet.radius < boss.hitbox[1] + boss.hitbox[3] and bullet.y + bullet.radius > boss.hitbox[1]:
