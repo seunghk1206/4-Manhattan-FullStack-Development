@@ -230,7 +230,7 @@ def drawGameWindow(): #캐릭터가 움직일때마다 모션 표현
 
 def drawGameWindow2(): #캐릭터가 움직일때마다 모션 표현
     screen.blit(bg2,(0,0)) # 내뒤에 있는 사진 지우기용
-    text = font2.render('Score: ' + str(score), 2, (255,255,255)) # font 설정!
+    text = font.render('Score: ' + str(score), 2, (255,255,255)) # font 설정!
     screen.blit(text, (450, 10))
     n_door.draw(screen)
     man.draw(screen)
@@ -313,7 +313,7 @@ def Control():
     else:
         jumpDown()
 
-def visible():
+def manHit():
     if goblin.visible:
         if man.hitbox[1] < goblin.hitbox[1] + goblin.hitbox[3] and man.hitbox[1] + man.hitbox[3] > goblin.hitbox[1]:
             if man.hitbox[0] + man.hitbox[2]  >goblin.hitbox[0] and man.hitbox[0] < goblin.hitbox[0] + goblin.hitbox[2]:
@@ -321,7 +321,12 @@ def visible():
                 score = 0
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            run = False
+            run = False   
+
+
+while beginning == 1:
+    clock.tick(27) # 27 frames
+    manHit()
     for bullet in bullets:
         if goblin.visible:
             if bullet.y - bullet.radius < goblin.hitbox[1] + goblin.hitbox[3] and bullet.y + bullet.radius > goblin.hitbox[1]:
@@ -338,11 +343,7 @@ def visible():
             if bullet.x < 600 and bullet.x > 0: #벽을 뚫지 않게
                 bullet.x += bullet.vel
             else:
-                bullets.pop(bullets.index(bullet))
-
-while beginning == 1:
-    clock.tick(27) # 27 frames
-    visible()   
+                bullets.pop(bullets.index(bullet))  
 
     pressed = pygame.key.get_pressed()
     ##작은 칸을 넘어가야함. 50 < x < 66 
