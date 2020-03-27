@@ -4,7 +4,7 @@
 
 My product is a game. This game was made to test my basic abilities, and my application skills. The current version is Pv0.0.1. is possible, please give me a feedback about the game so that I can improve furtherly in the future. Again I repeat. This is a Pv(Prototype version), the game may not function well.
 
-For the game, you would have to download several things. First of all, you would want to download the content files(). 
+For the game, you would have to download several things. First of all, you would want to download the content files(they include all the folders in the branch.). Also, python, and pygame is essential in order to launch the game! Before you download, you would need to register in order to launch. These are for data saving purposes. And please, DO NOT CHEAT OR COPY THE PROJECT! Thank you!
 
 ![](header.png)
 
