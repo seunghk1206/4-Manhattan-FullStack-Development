@@ -409,7 +409,7 @@ while Third == 1:
         if not boss.visible:
             if 460 < man.x < 500:
                 beginning = 0
-                second = 1
+                fourth = 1
                 StageTwo()
                 break
         if 168< man.x <232:
