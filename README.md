@@ -13,7 +13,7 @@ For the game, you would have to download several things. First of all, you would
 OS X & Linux:
 
 ```sh
-npm install my-crazy-module --save
+For OS X or Linux, the file has to be editted into a right file such as executable file in Linux
 ```
 
 Windows:
