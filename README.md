@@ -13,18 +13,18 @@ For the game, you would have to download several things. First of all, you would
 OS X & Linux:
 
 ```sh
-For OS X or Linux, the file has to be editted into a right file such as executable file in Linux
+ManhattanPractice.dmg
 ```
 
 Windows:
 
 ```sh
-edit autoexec.bat
+ManhattanPractice.exe
 ```
 
 ## Usage example
 
-A few motivating and useful examples of how your product can be used. Spice this up with code blocks and potentially more screenshots.
+My product is a game, so the purpose is to entertain people with my product. The product is 0.0.1 where it is still under a test. This may yet not be entertaining, but 1.0.0 will be the first version where my purpose lie on entertaining.
 
 _For more examples and usage, please refer to the [Wiki][wiki]._
 
