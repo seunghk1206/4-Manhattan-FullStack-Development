@@ -4,6 +4,11 @@ pygame.init()
 from ManhattanClasses import *
 #instance
 
+man = player(50, 400, 64, 64)#main character
+goblin = enemy(100, 410, 64, 64, 550, 5, 10, 10) #goblin = class를 가진 instance. 
+boss = enemy(80, 410, 64, 64, 550, 7, 20, 20)
+human = npc(200, 410, 64, 64)#self, x, y, width, height
+
 def drawGameWindow(): #캐릭터가 움직일때마다 모션 표현
     screen.blit(bg,(0,0)) # 내뒤에 있는 사진 지우기용
     text = font.render('Score: ' + str(score), 2, (0,0,0)) # font 설정!
