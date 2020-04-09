@@ -213,11 +213,6 @@ clock = pygame.time.Clock()
 beginning = 1 # 1 = true
 second = 0 #0 = false, do not start stage two yet
 
-man = player(50, 400, 64, 64)#main character
-goblin = enemy(100, 410, 64, 64, 550, 5, 10, 10) #goblin = class를 가진 instance. 
-boss = enemy(80, 410, 64, 64, 550, 7, 20, 20)
-human = npc(200, 410, 64, 64)#self, x, y, width, height
-
 n_door = portal(500, 400, 64, 27)
 m_door = portal(500, 400, 64, 27)
 
