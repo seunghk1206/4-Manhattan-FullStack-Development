@@ -1,43 +1,7 @@
 import pygame
-from ManhattanP_classes import *
 pygame.init()
 
-walkRight = [pygame.image.load('MainChara_R/R1.png'), pygame.image.load('MainChara_R/R2.png'), pygame.image.load('MainChara_R/R3.png')]#, pygame.image.load('Game/R4.png'), pygame.image.load('Game/R5.png'), pygame.image.load('Game/R6.png'), pygame.image.load('Game/R7.png'), pygame.image.load('Game/R8.png'), pygame.image.load('Game/R9.png')]
-walkLeft = [pygame.image.load('MainChara_R/L1.png'), pygame.image.load('MainChara_R/L2.png'), pygame.image.load('MainChara_R/L3.png')]#, pygame.image.load('Game/L4.png'), pygame.image.load('Game/L5.png'), pygame.image.load('Game/L6.png'), pygame.image.load('Game/L7.png'), pygame.image.load('Game/L8.png'), pygame.image.load('Game/L9.png')]
-bg = pygame.image.load('Game/bg.jpg')
-bg2 = pygame.image.load('bg_map/bg2.png')
-bg3 = pygame.image.load('bg_map/bg3.png')
-#dungeon = pygame.image.load('')
-char = pygame.image.load('MainChara_R/standing.png')
-score = 0 # Tuple -> list
-#walkRight[4] = 5번째 사진??? 0번째가 첫번째다!!!
-
-screen = pygame.display.set_mode((600, 480))
-pygame.display.set_caption("MANhattan game project")
-icon = pygame.image.load('MainChara_R/R1.png')
-pygame.display.set_icon(icon)
-
-bulletSound = pygame.mixer.Sound('SoundEff/bullet.wav')
-hitSound = pygame.mixer.Sound('SoundEff/hit.wav')
-music = pygame.mixer.music.load('SoundEff/gameBGM.mp3')
-pygame.mixer.music.play(-1)
-#python = object oriented (객체 지향)
-
-clock = pygame.time.Clock()
-beginning = 1 # 1 = true
-second = 0 #0 = false, do not start stage two yet
-
-man = player(50, 400, 64, 64)#main character
-goblin = enemy(100, 410, 64, 64, 550, 5, 10, 10) #goblin = class를 가진 instance. 
-boss = enemy(80, 410, 64, 64, 550, 7, 20, 20)
-human = npc(200, 410, 64, 64)#self, x, y, width, height
-
-n_door = portal(500, 400, 64, 27)
-m_door = portal(500, 400, 64, 27)
-
-bullets = [] #각각의 총알의 명령문을 저장 => 총알이 몇알이 나가는지를 세어주는 역할
-font = pygame.font.SysFont('cosmicsans', 30, True)
-dia_font = pygame.font.SysFont('cosmicsans', 20, True)
+from ManhattanClasses import *
 #instance
 
 def drawGameWindow(): #캐릭터가 움직일때마다 모션 표현
@@ -214,7 +178,6 @@ while Third == 1:
         else:
             bullets.pop(bullets.index(bullet)) #[0 . 3 4 8 9] #501 픽셀로 가버리면 불릿을 없애버리는 코드
             #현재의 불릿 인덱스*(위치)를 찾아서 지움
-
 
     pressed = pygame.key.get_pressed()
     ##작은 칸을 넘어가야함. 50 < x < 66 
