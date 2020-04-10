@@ -187,6 +187,7 @@ class enemy():
             if event.type == pygame.QUIT:
                 run = False   
 
+man = player(50, 400, 64, 64)#main character
 
 walkRight = [pygame.image.load('MainChara_R/R1.png'), pygame.image.load('MainChara_R/R2.png'), pygame.image.load('MainChara_R/R3.png')]#, pygame.image.load('Game/R4.png'), pygame.image.load('Game/R5.png'), pygame.image.load('Game/R6.png'), pygame.image.load('Game/R7.png'), pygame.image.load('Game/R8.png'), pygame.image.load('Game/R9.png')]
 walkLeft = [pygame.image.load('MainChara_R/L1.png'), pygame.image.load('MainChara_R/L2.png'), pygame.image.load('MainChara_R/L3.png')]#, pygame.image.load('Game/L4.png'), pygame.image.load('Game/L5.png'), pygame.image.load('Game/L6.png'), pygame.image.load('Game/L7.png'), pygame.image.load('Game/L8.png'), pygame.image.load('Game/L9.png')]
