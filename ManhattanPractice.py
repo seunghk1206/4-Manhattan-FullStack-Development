@@ -4,7 +4,6 @@ pygame.init()
 from ManhattanClasses import *
 #instance
 
-man = player(50, 400, 64, 64)#main character
 goblin = enemy(100, 410, 64, 64, 550, 5, 10, 10) #goblin = class를 가진 instance. 
 boss = enemy(80, 410, 64, 64, 550, 7, 20, 20)
 human = npc(200, 410, 64, 64)#self, x, y, width, height
