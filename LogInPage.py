@@ -31,6 +31,7 @@ def login_user():
         verify = file.read().splitlines()#처음에 정렬되지 않은 리스트를 스페이스 다 없에고 ENTER 한거 다 없에서 하나의 값으로 나열
         if password_info in verify:
             print('logged in')
+            print('loading game')
             import ManhattanPractice
         else:
             print('password is not correct')
