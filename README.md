@@ -37,7 +37,9 @@ Describe how to install all development dependencies and how to run an automated
 ## Release History
 
 * 0.0.1
-    * Beta test release
+    * Beta test release(demo version, No save)
+* 0.0.2
+    * In progress
 
 ## Meta
 
@@ -46,12 +48,3 @@ Seunghyeon Kim – [@YourInsta](blue_seunghk_1206) – seunghk1206@gmail.com
 Distributed under the XYZ license. See ``LICENSE`` for more information.
 
 [https://github.com/yourname/github-link](https://github.com/dbader/)
-
-## Contributing
-
-1. Fork it (<https://github.com/seunghk1206/RPG.ManhattanProject/fork>)
-2. Create your feature branch (`git checkout -b feature/fooBar`)
-3. Commit your changes (`git commit -am 'Add some fooBar'`)
-4. Push to the branch (`git push origin feature/fooBar`)
-5. Create a new Pull Request
-
