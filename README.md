@@ -28,10 +28,9 @@ My product is a game, so the purpose is to entertain people with my product. The
 
 _For more examples and usage, please refer to the [Wiki][wiki]._
 
-## Development setup
+## Plan for further developement
 
-Describe how to install all development dependencies and how to run an automated test-suite of some kind. Potentially do this for multiple platforms.
-
+In the future, there are plans to be added on to the Manhattan project. There will be a saving system, and a login system.
 
 
 ## Release History
