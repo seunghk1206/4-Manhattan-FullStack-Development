@@ -6,7 +6,7 @@ def register_user(): # regiser 버튼
     password_info = password.get()
 
     if len(password_info) >= 8:
-        file = open(username_info, "w") #[username_info].txt - > youngho.txt, file의 권한 = w -> Write
+        file = open('username_info', "w") #[username_info].txt - > youngho.txt, file의 권한 = w -> Write
         file.write(username_info)
         file.write("\n") #new line
         file.write(password_info)
@@ -32,7 +32,12 @@ def login_user():
         if password_info in verify:
             print('logged in')
             print('loading game')
-            import ManhattanPractice
+            try:
+                os.rename('./username_info', './username_info_approved')
+                password_entry.delete(0,END)
+                Label(screen1, text = "The log has been change! try once more!", fg = "green", font = ("Calibri", 13)).pack()
+            except:
+                import ManhattanPractice
         else:
             print('password is not correct')
     else:
