@@ -1,6 +1,5 @@
 import pygame
 pygame.init()
-
 from ManhattanClasses import *
 #instance
 
@@ -105,6 +104,10 @@ def Control():
         jumpDown()
 
 while beginning == 1:
+    try:
+        paper = open("./username_info_approved", "r", encoding = "utf8")
+    except:
+        break
     clock.tick(27) # 27 frames
     goblin.manHit()
     for bullet in bullets:
