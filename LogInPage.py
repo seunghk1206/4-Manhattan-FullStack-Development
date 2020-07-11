@@ -101,7 +101,6 @@ def login_page():
     Button(text = "Login", width = 30, height = 2, command = login).pack()
     Label(text = "").pack()
     Button(text = "Register", width = 30, height = 2, command = register).pack()
-
     screen.mainloop()
 
 login_page()
