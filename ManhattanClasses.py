@@ -14,7 +14,6 @@ class player(object):
         self.jumpCount = 10
         self.standing = True
         self.hitbox = (self.x + 17 , self.y + 11, 28, 60)
-        
 
     def draw(self, screen):
         if self.walkCount + 1 >= 9:
@@ -98,7 +97,6 @@ class npc():
         dia = dia_font.render(self.writings, 25, (255,0,0))
 
         screen.blit(dia, (200, 410))
-
 
 class enemy():
     walkRight = [pygame.image.load('Game/R1E.png'), pygame.image.load('Game/R2E.png'), pygame.image.load('Game/R3E.png'), pygame.image.load('Game/R4E.png'), pygame.image.load('Game/R5E.png'), pygame.image.load('Game/R6E.png'), pygame.image.load('Game/R7E.png'), pygame.image.load('Game/R8E.png'), pygame.image.load('Game/R9E.png'), pygame.image.load('Game/R10E.png'), pygame.image.load('Game/R11E.png')]
@@ -185,7 +183,7 @@ class enemy():
                     score = 0
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                run = False   
+                run = False
 
 man = player(50, 400, 64, 64)#main character
 
